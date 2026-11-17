@@ -1,0 +1,15 @@
+.task-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  &__search input {
+    width: 100%;
+  }
+}

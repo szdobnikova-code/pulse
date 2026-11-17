@@ -1,9 +1,7 @@
 <ul>
   @for (task of tasks(); track task.id) {
-    <li>{{task.title}} - {{task.status}}</li>
-    <button type="button" (click)="deleteTask.emit(task.id)">
-      Delete
-    </button>
+    <li>{{ task.title }} - {{ task.status }}</li>
+    <button type="button" (click)="deleteTask.emit(task.id)">Delete</button>
   } @empty {
     <li>No tasks yet</li>
   }

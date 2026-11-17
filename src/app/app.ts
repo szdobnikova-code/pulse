@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TaskStore } from './tasks/task-store';
 import { TaskList } from './features/tasks/ui/task-list/task-list';
+import { TaskFilters } from './features/tasks/ui/task-filters/task-filters';
 
 @Component({
-  imports: [RouterOutlet, TaskList],
+  imports: [RouterOutlet, TaskList, TaskFilters],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

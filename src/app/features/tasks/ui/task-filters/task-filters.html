@@ -1,0 +1,62 @@
+<div class="task-filters">
+  <div class="task-filters__search">
+    <label for="search">Search</label>
+    <input
+      id="search"
+      #searchInput
+      [value]="query().search"
+      type="search"
+      placeholder="Search tasks..."
+      (input)="searchChange.emit(searchInput.value)"
+    />
+  </div>
+  <div class="task-filters__controls">
+    <label for="status">Status</label>
+    <select
+      id="status"
+      [value]="query().status"
+      #statusSelect
+      (change)="onStatusChange(statusSelect.value)"
+    >
+      <option value="all">All statuses</option>
+      <option value="todo">To do</option>
+      <option value="in_progress">In progress</option>
+      <option value="done">Done</option>
+    </select>
+    <label for="priority">Priority</label>
+    <select
+      id="priority"
+      [value]="query().priority"
+      #prioritySelect
+      (change)="onPriorityChange(prioritySelect.value)"
+    >
+      <option value="all">All priorities</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    <label for="sortField">Sort</label>
+    <select
+      id="sortField"
+      [value]="query().sort.field"
+      #sortFieldSelect
+      (change)="onSortChange(sortFieldSelect.value, sortDirectionSelect.value)"
+    >
+      <option value="updatedAt">Updated at</option>
+      <option value="title">Title</option>
+      <option value="status">Status</option>
+      <option value="priority">Priority</option>
+      <option value="dueDate">Due date</option>
+    </select>
+    <label for="sortDirection">Direction</label>
+    <select
+      id="sortDirection"
+      [value]="query().sort.direction"
+      #sortDirectionSelect
+      (change)="onSortChange(sortFieldSelect.value, sortDirectionSelect.value)"
+    >
+      <option value="desc">Descending</option>
+      <option value="asc">Ascending</option>
+    </select>
+  </div>
+</div>
