@@ -5,7 +5,6 @@ describe('TaskFilters', () => {
   let component: TaskFilters;
   let fixture: ComponentFixture<TaskFilters>;
 
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskFilters],

@@ -1,0 +1,9 @@
+<dialog #dialog (close)="closeRequested.emit()">
+  <h2>Create task</h2>
+
+  @if (isOpen()) {
+    <app-task-form (createTask)="createTask.emit($event)" />
+  }
+
+  <button type="button" (click)="closeRequested.emit()">Cancel</button>
+</dialog>

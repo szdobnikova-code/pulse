@@ -1,19 +1,7 @@
 <main class="main">
   <div class="content">
     <h1>Pulse — Project Workspace</h1>
-
-    <p>Total tasks: {{ taskStore.stats().total }}</p>
-    <p>Completed: {{ taskStore.stats().done }}</p>
-    <p>Completion rate: {{ taskStore.stats().completionRate }}%</p>
-    <button (click)="addDemoTask()">Add demo task</button>
-    <app-task-filters
-      [query]="taskStore.taskQuery()"
-      (searchChange)="taskStore.setSearch($event)"
-      (statusChange)="taskStore.setStatus($event)"
-      (priorityChange)="taskStore.setPriority($event)"
-      (sortChange)="taskStore.setSort($event.field, $event.direction)"
-    />
-    <app-task-list [tasks]="taskStore.visibleTasks()" (deleteTask)="taskStore.deleteTask($event)" />
+    <app-task-workspace />
   </div>
 </main>
 <router-outlet />
