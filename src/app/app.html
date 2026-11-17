@@ -1,6 +1,12 @@
 <main class="main">
   <div class="content">
-    <h1>Pulse</h1>
+    <h1>Pulse — Project Workspace</h1>
+
+    <p>Total tasks: {{ taskStore.stats().total }}</p>
+    <p>Completed: {{ taskStore.stats().done }}</p>
+    <p>Completion rate: {{ taskStore.stats().completionRate }}%</p>
+    <button (click)="addDemoTask()">Add demo task</button>
+    <app-task-list [tasks]="taskStore.visibleTasks()" (deleteTask)="taskStore.deleteTask($event)"/>
   </div>
 </main>
 <router-outlet />
