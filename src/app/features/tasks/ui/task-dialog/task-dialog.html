@@ -1,8 +1,12 @@
 <dialog #dialog (close)="closeRequested.emit()">
-  <h2>Create task</h2>
+  <h2>{{ task() ? 'Edit task' : 'Create task' }}</h2>
 
   @if (isOpen()) {
-    <app-task-form (createTask)="createTask.emit($event)" />
+    <app-task-form
+      [task]="task()"
+      (createTask)="createTask.emit($event)"
+      (updateTask)="updateTask.emit($event)"
+    />
   }
 
   <button type="button" (click)="closeRequested.emit()">Cancel</button>

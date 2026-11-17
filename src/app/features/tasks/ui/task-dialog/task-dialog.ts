@@ -1,6 +1,6 @@
 import { Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
 import { TaskForm } from '../task-form/task-form';
-import { TaskDraft } from '../../data/task.model';
+import { Task, TaskDraft } from '../../data/task.model';
 
 @Component({
   imports: [TaskForm],
@@ -12,6 +12,8 @@ export class TaskDialog {
   readonly isOpen = input.required<boolean>();
   readonly closeRequested = output<void>();
   readonly createTask = output<TaskDraft>();
+  readonly updateTask = output<{ id: string; draft: TaskDraft }>();
+  readonly task = input<Task | null>(null);
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 

@@ -35,5 +35,7 @@
     <input id="dueDate" type="date" formControlName="dueDate" />
   </div>
 
-  <button type="submit" [attr.aria-disabled]="form.invalid">Create task</button>
+  <button type="submit" [attr.aria-disabled]="form.invalid">
+    {{ task() ? 'Save changes' : 'Create task' }}
+  </button>
 </form>

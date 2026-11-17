@@ -10,4 +10,5 @@ import { Task } from '../../data/task.model';
 export class TaskList {
   readonly tasks = input.required<Task[]>();
   readonly deleteTask = output<string>();
+  readonly editTask = output<string>();
 }

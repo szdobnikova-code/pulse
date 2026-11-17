@@ -1,6 +1,6 @@
-import { Component, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TaskDraft, TaskPriority, TaskStatus } from '../../data/task.model';
+import { Task, TaskDraft, TaskPriority, TaskStatus } from '../../data/task.model';
 import { trimmedRequired } from '../../validators/trimmed-required.validator';
 
 @Component({
@@ -11,6 +11,8 @@ import { trimmedRequired } from '../../validators/trimmed-required.validator';
 })
 export class TaskForm {
   readonly createTask = output<TaskDraft>();
+  readonly updateTask = output<{ id: string; draft: TaskDraft }>();
+  readonly task = input<Task | null>(null);
 
   readonly form = new FormGroup({
     title: new FormControl('', {
@@ -36,15 +38,40 @@ export class TaskForm {
     }
 
     const { title, description, status, priority, dueDate } = this.form.getRawValue();
-
-    this.createTask.emit({
+    const draft: TaskDraft = {
       title: title.trim(),
       description: description.trim(),
       status,
       priority,
       dueDate: dueDate || null,
-    });
+    };
+
+    const task = this.task();
+
+    if (task) {
+      this.updateTask.emit({ id: task.id, draft });
+    } else {
+      this.createTask.emit(draft);
+    }
 
     this.form.reset();
+  }
+
+  constructor() {
+    effect(() => {
+      const task = this.task();
+
+      if (!task) {
+        return;
+      }
+
+      this.form.patchValue({
+        title: task.title,
+        description: task.description,
+        status: task.status,
+        priority: task.priority,
+        dueDate: task.dueDate,
+      });
+    });
   }
 }
