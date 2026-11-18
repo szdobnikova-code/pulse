@@ -3,7 +3,5 @@
     <li>{{ task.title }} - {{ task.status }}</li>
     <button type="button" (click)="editTask.emit(task.id)">Edit</button>
     <button type="button" (click)="deleteTask.emit(task.id)">Delete</button>
-  } @empty {
-    <li>No tasks yet</li>
   }
 </ul>

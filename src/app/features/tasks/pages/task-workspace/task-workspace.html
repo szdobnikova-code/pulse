@@ -10,11 +10,20 @@
     (priorityChange)="taskStore.setPriority($event)"
     (sortChange)="taskStore.setSort($event.field, $event.direction)"
   />
-  <app-task-list
-    [tasks]="taskStore.visibleTasks()"
-    (editTask)="openEditTaskDialog($event)"
-    (deleteTask)="taskStore.deleteTask($event)"
-  />
+  @if (taskStore.hasActiveFilters()) {
+    <button type="button" (click)="taskStore.resetFilters()">Clear filters</button>
+  }
+  @if (taskStore.tasks().length === 0) {
+    <div>No tasks yet. Create your first task.</div>
+  } @else if (taskStore.visibleTasks().length === 0) {
+    <div>No tasks match your filters.</div>
+  } @else {
+    <app-task-list
+      [tasks]="taskStore.visibleTasks()"
+      (editTask)="openEditTaskDialog($event)"
+      (deleteTask)="taskStore.deleteTask($event)"
+    />
+  }
   <app-task-dialog
     [isOpen]="isTaskDialogOpen()"
     [task]="selectedTask()"

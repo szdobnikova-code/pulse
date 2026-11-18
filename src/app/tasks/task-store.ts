@@ -1,4 +1,4 @@
-import { computed, Service, signal } from '@angular/core';
+import { computed, effect, inject, Service, signal } from '@angular/core';
 import {
   Task,
   TaskQuery,
@@ -10,10 +10,12 @@ import {
 } from '../features/tasks/data/task.model';
 import { applyTaskQuery, computeStats } from '../features/tasks/data/task.query';
 import { getTodayISO } from '../features/tasks/data/task-date.utils';
+import { TaskStorage } from './task-storage';
 
 @Service()
 export class TaskStore {
-  private readonly _tasks = signal<Task[]>([]);
+  private taskStorage = inject(TaskStorage);
+  private readonly _tasks = signal<Task[]>(this.taskStorage.loadTasks());
   readonly tasks = this._tasks.asReadonly();
   private readonly _taskQuery = signal<TaskQuery>({
     search: '',
@@ -27,6 +29,17 @@ export class TaskStore {
   readonly taskQuery = this._taskQuery.asReadonly();
   readonly stats = computed(() => computeStats(this._tasks(), getTodayISO()));
   readonly visibleTasks = computed(() => applyTaskQuery(this._tasks(), this._taskQuery()));
+  readonly hasActiveFilters = computed(() => {
+    const query = this._taskQuery();
+
+    return query.search.trim() || query.status !== 'all' || query.priority !== 'all';
+  });
+
+  constructor() {
+    effect(() => {
+      this.taskStorage.saveTasks(this._tasks());
+    });
+  }
 
   addTask(task: Task): void {
     this._tasks.update((arr) => [...arr, task]);
@@ -69,5 +82,14 @@ export class TaskStore {
 
   setSort(field: SortField, direction: SortDirection): void {
     this._taskQuery.update((query) => ({ ...query, sort: { field, direction } }));
+  }
+
+  resetFilters(): void {
+    this._taskQuery.update((query) => ({
+      ...query,
+      search: '',
+      status: 'all',
+      priority: 'all',
+    }));
   }
 }
