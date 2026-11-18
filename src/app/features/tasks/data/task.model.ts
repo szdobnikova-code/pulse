@@ -32,5 +32,5 @@ export interface TaskStats {
   inProgress: number;
   done: number;
   overdue: number; // not done and dueDate < today
-  completionRate: number; // 0..1, 0 when total = 0
+  completionRate: number; // percentage 0..100, 0 when total = 0
 }

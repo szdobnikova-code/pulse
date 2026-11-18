@@ -189,6 +189,11 @@ export function createDemoTasks(): Task[] {
     const updatedAt = new Date(createdAt);
     updatedAt.setDate(updatedAt.getDate() + Math.min(3, index % 4));
 
+    // Keep timestamps in the past: createdAt <= updatedAt <= now.
+    if (updatedAt.getTime() > now.getTime()) {
+      updatedAt.setTime(now.getTime());
+    }
+
     return {
       ...task,
       id: crypto.randomUUID(),
