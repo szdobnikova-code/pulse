@@ -1,8 +1,24 @@
-<dialog #dialog (close)="cancelled.emit()">
-  <h2>{{ title() }}</h2>
+<dialog #dialog class="confirm-dialog" (close)="cancelled.emit()">
+  <div class="confirm-dialog__header">
+    <span class="confirm-dialog__icon">
+      <ng-icon name="lucideTriangleAlert" size="22" />
+    </span>
 
-  <p>{{ message() }}</p>
+    <button type="button" class="dialog-close" aria-label="Close dialog" (click)="cancelled.emit()">
+      <ng-icon name="lucideX" size="20" />
+    </button>
+  </div>
 
-  <button type="button" (click)="confirmed.emit()">Confirm</button>
-  <button type="button" (click)="cancelled.emit()">Cancel</button>
+  <h2 class="confirm-dialog__title">{{ title() }}</h2>
+
+  <p class="confirm-dialog__message">{{ message() }}</p>
+
+  <div class="confirm-dialog__footer">
+    <button #cancelButton class="confirm-dialog__cancel" type="button" (click)="cancelled.emit()">
+      Cancel
+    </button>
+    <button class="confirm-dialog__confirm" type="button" (click)="confirmed.emit()">
+      {{ confirmLabel() }}
+    </button>
+  </div>
 </dialog>

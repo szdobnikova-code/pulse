@@ -1,18 +1,82 @@
+<header class="workspace-header">
+  <div class="workspace-brand">
+    <svg class="workspace-brand__icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <path
+        d="M3 19 H9 L13 13 L17 25 L22 7 L26 19 H33"
+        stroke="currentColor"
+        stroke-width="2.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+
+    <span>Pulse</span>
+  </div>
+  <div class="workspace-heading">
+    <h1>Tasks</h1>
+    <p>Manage your tasks, track progress, and stay focused.</p>
+  </div>
+
+  <button type="button" class="new-task-button" (click)="openCreateTaskDialog()">
+    <ng-icon name="lucidePlus" size="18" />
+    New task
+  </button>
+</header>
+<section class="stats-grid" aria-label="Task statistics">
+  <div class="stats-card">
+    <span class="stats-icon stats-icon--primary">
+      <ng-icon name="lucideClipboard" />
+    </span>
+    <div class="stats-card__body">
+      <span class="stats-label">Total tasks</span>
+      <strong class="stats-value">{{ taskStore.stats().total }}</strong>
+    </div>
+  </div>
+  <div class="stats-card">
+    <span class="stats-icon stats-icon--info">
+      <ng-icon name="lucideLoaderCircle" />
+    </span>
+    <div class="stats-card__body">
+      <span class="stats-label">In progress</span>
+      <strong class="stats-value stats-value--info">{{ taskStore.stats().inProgress }}</strong>
+    </div>
+  </div>
+  <div class="stats-card">
+    <span class="stats-icon stats-icon--success">
+      <ng-icon name="lucideCheck" />
+    </span>
+    <div class="stats-card__body">
+      <span class="stats-label">Completed</span>
+      <strong class="stats-value stats-value--success">{{ taskStore.stats().done }}</strong>
+    </div>
+  </div>
+  <div class="stats-card">
+    <span class="stats-icon stats-icon--primary">
+      <ng-icon name="lucideChartNoAxesColumnIncreasing" />
+    </span>
+    <div class="stats-card__body">
+      <span class="stats-label">Completion rate</span>
+      <strong class="stats-value stats-value--primary">{{
+        taskStore.stats().completionRate
+      }}%</strong>
+    </div>
+  </div>
+</section>
 <div>
-  <p>Total tasks: {{ taskStore.stats().total }}</p>
-  <p>Completed: {{ taskStore.stats().done }}</p>
-  <p>Completion rate: {{ taskStore.stats().completionRate }}%</p>
-  <button type="button" (click)="openCreateTaskDialog()">Add task</button>
-  <app-task-filters
-    [query]="taskStore.taskQuery()"
-    (searchChange)="taskStore.setSearch($event)"
-    (statusChange)="taskStore.setStatus($event)"
-    (priorityChange)="taskStore.setPriority($event)"
-    (sortChange)="taskStore.setSort($event.field, $event.direction)"
-  />
-  @if (taskStore.hasActiveFilters()) {
-    <button type="button" (click)="taskStore.resetFilters()">Clear filters</button>
-  }
+  <div class="workspace-filters">
+    <app-task-filters
+      [query]="taskStore.taskQuery()"
+      (searchChange)="taskStore.setSearch($event)"
+      (statusChange)="taskStore.setStatus($event)"
+      (priorityChange)="taskStore.setPriority($event)"
+      (sortChange)="taskStore.setSort($event.field, $event.direction)"
+    />
+    @if (taskStore.hasActiveFilters()) {
+      <button type="button" class="clear-filters-button" (click)="taskStore.resetFilters()">
+        Clear filters
+      </button>
+    }
+  </div>
   @if (taskStore.tasks().length === 0) {
     <div>No tasks yet. Create your first task.</div>
   } @else if (taskStore.visibleTasks().length === 0) {
@@ -34,7 +98,8 @@
   <app-confirm-dialog
     [isOpen]="taskToDelete() !== null"
     title="Delete task"
-    [message]="'Are you sure you want to delete ' + taskToDelete()?.title +'?'"
+    confirmLabel="Delete"
+    [message]="'Are you sure you want to delete ' + taskToDelete()?.title + '?'"
     (confirmed)="confirmDeleteTask()"
     (cancelled)="cancelDeleteTask()"
   />

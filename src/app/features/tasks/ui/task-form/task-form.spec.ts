@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskForm } from './task-form';
+import { provideAppIcons } from '../../../../icons';
 
 describe('TaskForm', () => {
   let component: TaskForm;
@@ -8,6 +9,7 @@ describe('TaskForm', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskForm],
+      providers: [provideAppIcons()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskForm);

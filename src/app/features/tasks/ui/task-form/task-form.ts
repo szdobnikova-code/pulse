@@ -2,9 +2,10 @@ import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task, TaskDraft, TaskPriority, TaskStatus } from '../../data/task.model';
 import { trimmedRequired } from '../../validators/trimmed-required.validator';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIcon],
   selector: 'app-task-form',
   styleUrl: './task-form.scss',
   templateUrl: './task-form.html',
@@ -13,6 +14,7 @@ export class TaskForm {
   readonly createTask = output<TaskDraft>();
   readonly updateTask = output<{ id: string; draft: TaskDraft }>();
   readonly task = input<Task | null>(null);
+  readonly validityChange = output<boolean>();
 
   readonly form = new FormGroup({
     title: new FormControl('', {
@@ -72,6 +74,10 @@ export class TaskForm {
         priority: task.priority,
         dueDate: task.dueDate,
       });
+    });
+
+    this.form.statusChanges.subscribe(() => {
+      this.validityChange.emit(this.form.valid);
     });
   }
 }

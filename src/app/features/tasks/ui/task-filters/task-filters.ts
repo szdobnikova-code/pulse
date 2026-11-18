@@ -6,9 +6,10 @@ import {
   TaskQuery,
   TaskStatus,
 } from '../../data/task.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
-  imports: [],
+  imports: [NgIcon],
   selector: 'app-task-filters',
   styleUrl: './task-filters.scss',
   templateUrl: './task-filters.html',

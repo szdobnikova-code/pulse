@@ -1,41 +1,45 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div>
+<form id="task-form" class="task-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="task-form__field">
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title" />
     @if (form.controls.title.invalid && form.controls.title.touched) {
-      <span class="field-error">Title is required</span>
+      <span class="task-form__error">Title is required</span>
     }
   </div>
 
-  <div>
+  <div class="task-form__field">
     <label for="description">Description</label>
     <textarea id="description" formControlName="description"></textarea>
   </div>
 
-  <div>
-    <label for="status">Status</label>
-    <select id="status" formControlName="status">
-      <option value="todo">To do</option>
-      <option value="in_progress">In progress</option>
-      <option value="done">Done</option>
-    </select>
+  <div class="task-form__row">
+    <div class="task-form__field">
+      <label for="status">Status</label>
+      <div class="task-form__control">
+        <select id="status" formControlName="status">
+          <option value="todo">To do</option>
+          <option value="in_progress">In progress</option>
+          <option value="done">Done</option>
+        </select>
+        <ng-icon class="task-form__chevron" name="lucideChevronDown" size="18" />
+      </div>
+    </div>
+
+    <div class="task-form__field">
+      <label for="priority">Priority</label>
+      <div class="task-form__control">
+        <select id="priority" formControlName="priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <ng-icon class="task-form__chevron" name="lucideChevronDown" size="18" />
+      </div>
+    </div>
   </div>
 
-  <div>
-    <label for="priority">Priority</label>
-    <select id="priority" formControlName="priority">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
-  </div>
-
-  <div>
+  <div class="task-form__field">
     <label for="dueDate">Due date</label>
     <input id="dueDate" type="date" formControlName="dueDate" />
   </div>
-
-  <button type="submit" [attr.aria-disabled]="form.invalid">
-    {{ task() ? 'Save changes' : 'Create task' }}
-  </button>
 </form>

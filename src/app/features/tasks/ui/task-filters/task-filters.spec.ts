@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskFilters } from './task-filters';
+import { provideAppIcons } from '../../../../icons';
 
 describe('TaskFilters', () => {
   let component: TaskFilters;
@@ -8,6 +9,7 @@ describe('TaskFilters', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskFilters],
+      providers: [provideAppIcons()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskFilters);

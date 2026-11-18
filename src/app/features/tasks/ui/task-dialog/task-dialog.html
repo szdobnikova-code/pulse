@@ -1,5 +1,16 @@
-<dialog #dialog (close)="closeRequested.emit()">
-  <h2>{{ task() ? 'Edit task' : 'Create task' }}</h2>
+<dialog #dialog class="task-dialog" (close)="closeRequested.emit()">
+  <div class="task-dialog__header">
+    <h2>{{ task() ? 'Edit task' : 'Create task' }}</h2>
+
+    <button
+      type="button"
+      class="dialog-close"
+      aria-label="Close dialog"
+      (click)="closeRequested.emit()"
+    >
+      <ng-icon name="lucideX" size="20" />
+    </button>
+  </div>
 
   @if (isOpen()) {
     <app-task-form
@@ -9,5 +20,18 @@
     />
   }
 
-  <button type="button" (click)="closeRequested.emit()">Cancel</button>
+  <div class="task-dialog__footer">
+    <button type="button" class="task-dialog__cancel" (click)="closeRequested.emit()">
+      Cancel
+    </button>
+
+    <button
+      class="task-dialog__submit"
+      type="submit"
+      form="task-form"
+      [attr.aria-disabled]="isFormValid()"
+    >
+      {{ task() ? 'Save changes' : 'Create task' }}
+    </button>
+  </div>
 </dialog>

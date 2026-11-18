@@ -5,9 +5,10 @@ import { TaskFilters } from '../../ui/task-filters/task-filters';
 import { TaskDialog } from '../../ui/task-dialog/task-dialog';
 import { Task, TaskDraft } from '../../data/task.model';
 import { ConfirmDialog } from '../../../../shared/ui/confirm-dialog/confirm-dialog';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
-  imports: [TaskList, TaskFilters, TaskDialog, ConfirmDialog],
+  imports: [TaskList, TaskFilters, TaskDialog, ConfirmDialog, NgIcon],
   selector: 'app-task-workspace',
   styleUrl: './task-workspace.scss',
   templateUrl: './task-workspace.html',

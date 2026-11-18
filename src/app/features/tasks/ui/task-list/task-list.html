@@ -1,7 +1,93 @@
-<ul>
-  @for (task of tasks(); track task.id) {
-    <li>{{ task.title }} - {{ task.status }}</li>
-    <button type="button" (click)="editTask.emit(task.id)">Edit</button>
-    <button type="button" (click)="deleteTask.emit(task.id)">Delete</button>
-  }
-</ul>
+<div class="task-table-wrapper">
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th scope="col">Task</th>
+        <th scope="col">Status</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Due date</th>
+        <th scope="col">Updated</th>
+        <th scope="col" class="task-table__actions-header">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (task of tasks(); track task.id) {
+        <tr>
+          <td class="task-table__task">
+            <strong>{{ task.title }}</strong>
+            @if (task.description) {
+              <span class="task-table__description">{{ task.description }}</span>
+            }
+          </td>
+          <td>
+            <span
+              class="task-table__badge"
+              [class.task-table__badge--todo]="task.status === 'todo'"
+              [class.task-table__badge--progress]="task.status === 'in_progress'"
+              [class.task-table__badge--done]="task.status === 'done'"
+            >
+              @switch (task.status) {
+                @case ('todo') {
+                  <ng-icon name="lucideCircle" size="14" />
+                  To do
+                }
+                @case ('in_progress') {
+                  <ng-icon name="lucideLoaderCircle" size="14" />
+                  In progress
+                }
+                @default {
+                  <ng-icon name="lucideCheck" size="14" />
+                  Done
+                }
+              }
+            </span>
+          </td>
+          <td>
+            <span
+              class="task-table__priority"
+              [class.task-table__priority--low]="task.priority === 'low'"
+              [class.task-table__priority--medium]="task.priority === 'medium'"
+              [class.task-table__priority--high]="task.priority === 'high'"
+            >
+              <span class="task-table__dot" aria-hidden="true"></span>
+              {{ task.priority }}
+            </span>
+          </td>
+          <td>
+            @if (task.dueDate) {
+              <span class="task-table__due">
+                <ng-icon name="lucideCalendar" size="16" />
+                {{ task.dueDate | date: 'dd.MM.yyyy' }}
+              </span>
+            } @else {
+              -
+            }
+          </td>
+          <td>{{ task.updatedAt | date: 'dd.MM.yyyy' }}</td>
+          <td>
+            <div class="task-table__actions">
+              <button
+                type="button"
+                class="task-table__action task-table__action--edit"
+                [attr.aria-label]="'Edit task ' + task.title"
+                title="Edit task"
+                (click)="editTask.emit(task.id)"
+              >
+                <ng-icon name="lucidePencil" size="16" />
+              </button>
+              <button
+                type="button"
+                class="task-table__action task-table__action--delete"
+                [attr.aria-label]="'Delete task ' + task.title"
+                title="Delete task"
+                (click)="deleteTask.emit(task.id)"
+              >
+                <ng-icon name="lucideTrash2" size="16" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
