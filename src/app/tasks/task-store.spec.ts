@@ -84,8 +84,29 @@ describe('TaskStore', () => {
   let store: TaskStore;
 
   beforeEach(() => {
+    // An explicitly stored empty list -- the store only seeds demo tasks when nothing
+    // has ever been persisted, which 'demo data' covers separately.
+    localStorage.setItem('pulse.tasks', '[]');
     TestBed.configureTestingModule({});
     store = TestBed.inject(TaskStore);
+  });
+
+  afterEach(() => {
+    localStorage.removeItem('pulse.tasks');
+  });
+
+  describe('demo data', () => {
+    it('should seed the demo tasks when nothing has been persisted', () => {
+      localStorage.removeItem('pulse.tasks');
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({});
+
+      expect(TestBed.inject(TaskStore).tasks().length).toBeGreaterThan(0);
+    });
+
+    it('should keep a stored empty list instead of seeding demo tasks', () => {
+      expect(store.tasks()).toEqual([]);
+    });
   });
 
   describe('initial state', () => {

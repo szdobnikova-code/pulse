@@ -23,6 +23,14 @@ function isTask(value: unknown): value is Task {
 
 @Service()
 export class TaskStorage {
+  /**
+   * Whether tasks have ever been persisted. Distinguishes "never saved" from an
+   * intentionally emptied list, which `loadTasks()` reports identically as `[]`.
+   */
+  hasStoredTasks(): boolean {
+    return localStorage.getItem('pulse.tasks') !== null;
+  }
+
   loadTasks(): Task[] {
     const item = localStorage.getItem('pulse.tasks');
 

@@ -10,12 +10,19 @@ import {
 } from '../features/tasks/data/task.model';
 import { applyTaskQuery, computeStats } from '../features/tasks/data/task.query';
 import { getTodayISO } from '../features/tasks/data/task-date.utils';
+import { createDemoTasks } from '../features/tasks/data/demo-tasks';
 import { TaskStorage } from './task-storage';
 
 @Service()
 export class TaskStore {
   private taskStorage = inject(TaskStorage);
-  private readonly _tasks = signal<Task[]>(this.taskStorage.loadTasks());
+  /**
+   * Seed the demo tasks on a first launch only. Once anything has been persisted --
+   * including an empty list the user cleared themselves -- the stored data wins.
+   */
+  private readonly _tasks = signal<Task[]>(
+    this.taskStorage.hasStoredTasks() ? this.taskStorage.loadTasks() : createDemoTasks(),
+  );
   readonly tasks = this._tasks.asReadonly();
   private readonly _taskQuery = signal<TaskQuery>({
     search: '',
