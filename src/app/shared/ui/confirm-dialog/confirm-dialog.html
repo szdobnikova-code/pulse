@@ -1,0 +1,8 @@
+<dialog #dialog (close)="cancelled.emit()">
+  <h2>{{ title() }}</h2>
+
+  <p>{{ message() }}</p>
+
+  <button type="button" (click)="confirmed.emit()">Confirm</button>
+  <button type="button" (click)="cancelled.emit()">Cancel</button>
+</dialog>

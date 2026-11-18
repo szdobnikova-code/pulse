@@ -21,7 +21,7 @@
     <app-task-list
       [tasks]="taskStore.visibleTasks()"
       (editTask)="openEditTaskDialog($event)"
-      (deleteTask)="taskStore.deleteTask($event)"
+      (deleteTask)="requestDeleteTask($event)"
     />
   }
   <app-task-dialog
@@ -30,5 +30,12 @@
     (closeRequested)="closeTaskDialog()"
     (createTask)="onCreateTask($event)"
     (updateTask)="onUpdateTask($event)"
+  />
+  <app-confirm-dialog
+    [isOpen]="taskToDelete() !== null"
+    title="Delete task"
+    [message]="'Are you sure you want to delete ' + taskToDelete()?.title +'?'"
+    (confirmed)="confirmDeleteTask()"
+    (cancelled)="cancelDeleteTask()"
   />
 </div>
