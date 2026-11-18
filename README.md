@@ -1,5 +1,7 @@
 # Pulse
 
+**[▶ Live demo — pulse-taskboard.vercel.app](https://pulse-taskboard.vercel.app/)**
+
 Pulse is a task management dashboard built with Angular 22. It is a portfolio project
 focused on modern Angular patterns: standalone components, signal-based state, a zoneless
 application (no `zone.js`), and a feature-first project structure.
@@ -9,22 +11,20 @@ is seeded on first launch, so the app is fully usable without a backend.
 
 ## Screenshots
 
-_Screenshots to be added._ Drop the images into `docs/screenshots/` and uncomment the
-block below:
+Captured from the live deployment at
+[pulse-taskboard.vercel.app](https://pulse-taskboard.vercel.app/).
 
-| View | File |
-| --- | --- |
-| Dashboard with stats, filters and task table | `docs/screenshots/dashboard.png` |
-| Create / edit task dialog | `docs/screenshots/task-dialog.png` |
-| Search, filtering and sorting | `docs/screenshots/filters.png` |
-| Delete confirmation dialog | `docs/screenshots/delete-confirm.png` |
+### Dashboard
 
-<!--
-![Dashboard](docs/screenshots/dashboard.png)
-![Task dialog](docs/screenshots/task-dialog.png)
-![Filters](docs/screenshots/filters.png)
-![Delete confirmation](docs/screenshots/delete-confirm.png)
--->
+Statistics, search, filters and the task table, seeded with the demo dataset.
+
+![Pulse dashboard showing task statistics, filters and the task table](docs/screenshots/pulse-dashboard.png)
+
+### Create task dialog
+
+The reactive form behind "New task", rendered in a native modal `<dialog>`.
+
+![Pulse create task dialog with title, description, status, priority and due date fields](docs/screenshots/pulse-task-dialog.png)
 
 ## Features
 

@@ -17,6 +17,7 @@
       [task]="task()"
       (createTask)="createTask.emit($event)"
       (updateTask)="updateTask.emit($event)"
+      (validityChange)="isFormValid.set($event)"
     />
   }
 
@@ -29,7 +30,7 @@
       class="task-dialog__submit"
       type="submit"
       form="task-form"
-      [attr.aria-disabled]="isFormValid()"
+      [attr.aria-disabled]="!isFormValid()"
     >
       {{ task() ? 'Save changes' : 'Create task' }}
     </button>

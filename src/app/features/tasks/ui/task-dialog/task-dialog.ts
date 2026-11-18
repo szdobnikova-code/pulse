@@ -46,6 +46,9 @@ export class TaskDialog {
         }
       } else {
         if (dialog.open) dialog.close();
+        // The form is destroyed with the dialog, so drop its last reported validity:
+        // a fresh, empty form is invalid until it says otherwise.
+        this.isFormValid.set(false);
       }
     });
   }

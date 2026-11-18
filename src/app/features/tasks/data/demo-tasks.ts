@@ -1,12 +1,12 @@
 import { Task, TaskPriority, TaskStatus } from './task.model';
 
-type DemoTaskInput = {
+interface DemoTaskInput {
   title: string;
   description: string;
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string | null;
-};
+}
 
 const demoTasks: DemoTaskInput[] = [
   {
